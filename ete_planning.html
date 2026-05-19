@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Été 26">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0C0C0C">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgcng9IjQwIiBmaWxsPSIjMEMwQzBDIi8+PHRleHQgeD0iOTAiIHk9IjExNSIgZm9udC1zaXplPSI5MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPvCfjIU8L3RleHQ+PC9zdmc+">
+<title>Été 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --bg: #F5F4F0;
+  --surface: #FFFFFF;
+  --surface2: #F0EEE9;
+  --text: #0C0C0C;
+  --text2: #666;
+  --text3: #AAA;
+  --border: rgba(0,0,0,0.07);
+  --accent: #0C0C0C;
+  --green: #1A7A45;
+  --green-bg: #E8F5EE;
+  --amber: #C47B0A;
+  --amber-bg: #FDF4E3;
+  --red: #C0392B;
+  --red-bg: #FDECEA;
+  --tab-h: 84px;
+  --r: 18px;
+  --shadow: 0 2px 20px rgba(0,0,0,0.07);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+}
+
+html, body { height: 100%; overflow: hidden; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.5;
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── PAGES ─── */
+.app { position: fixed; inset: 0; display: flex; flex-direction: column; }
+
+.pages { flex: 1; position: relative; overflow: hidden; }
+
+.page {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity 0.28s cubic-bezier(0.4,0,0.2,1), transform 0.28s cubic-bezier(0.4,0,0.2,1);
+  pointer-events: none;
+  padding-bottom: calc(var(--tab-h) + 20px);
+}
+
+.page.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: all;
+}
+
+.page.exit {
+  opacity: 0;
+  transform: translateX(-24px);
+}
+
+/* ─── SCROLLBAR HIDE ─── */
+.page::-webkit-scrollbar { display: none; }
+
+/* ─── HEADER (per page) ─── */
+.page-header {
+  padding: max(env(safe-area-inset-top, 20px), 52px) 20px 20px;
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(245,244,240,0.9);
+}
+
+.page-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 4px;
+}
+
+.page-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  line-height: 1;
+}
+
+/* ─── HERO (home) ─── */
+.hero {
+  margin: 0 16px 20px;
+  background: var(--text);
+  border-radius: 24px;
+  padding: 28px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.03);
+  top: -60px;
+  right: -60px;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+  bottom: -30px;
+  left: 20px;
+}
+
+.hero-tag {
+  font-family: 'Outfit', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 6px;
+}
+
+.hero-sub {
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 24px;
+}
+
+.hero-track {
+  height: 4px;
+  background: var(--border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.hero-fill {
+  height: 100%;
+  background: var(--text);
+  border-radius: 99px;
+  transition: width 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+/* ─── SECTION LABEL ─── */
+.s-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  padding: 0 20px;
+  margin-bottom: 10px;
+  margin-top: 28px;
+}
+
+/* ─── COUNTDOWN ─── */
+.countdown-row {
+  display: flex;
+  gap: 8px;
+  padding: 0 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+.countdown-row::-webkit-scrollbar { display: none; }
+
+.cd-box {
+  background: var(--surface);
+  border-radius: var(--r);
+  padding: 16px 14px;
+  text-align: center;
+  flex-shrink: 0;
+  min-width: 90px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: transform 0.15s;
+}
+.cd-box:active { transform: scale(0.96); }
+
+.cd-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.cd-unit {
+  font-size: 10px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+}
+
+.cd-event {
+  font-size: 11px;
+  color: var(--text2);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* ─── TRIP CARDS (home) ─── */
+.trip-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 16px;
+}
+
+.trip-card {
+  background: var(--surface);
+  border-radius: var(--r);
+  padding: 18px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  -webkit-user-select: none;
+}
+.trip-card:active { transform: scale(0.98); box-shadow: var(--shadow-lg); }
+
+.trip-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.trip-icon.dark { background: var(--text); }
+.trip-icon.amber { background: var(--amber-bg); }
+.trip-icon.green { background: var(--green-bg); }
+.trip-icon.blue { background: #EEF2FF; }
+
+.trip-body { flex: 1; min-width: 0; }
+.trip-title { font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); letter-spacing: -0.01em; margin-bottom: 2px; }
+.trip-meta { font-size: 12px; color: var(--text2); }
+
+.trip-chevron { color: var(--text3); font-size: 18px; font-weight: 300; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 99px;
+}
+.badge.done { background: var(--green-bg); color: var(--green); }
+.badge.todo { background: var(--amber-bg); color: var(--amber); }
+.badge.urgent { background: var(--red-bg); color: var(--red); }
+.badge-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.badge.todo .badge-dot { animation: pulse 1.8s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ─── TRANSPORT PAGE ─── */
+.leg-list { display: flex; flex-direction: column; gap: 10px; padding: 0 16px; }
+
+.leg {
+  background: var(--surface);
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.leg-top {
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.leg-date-line {
+  font-size: 11px;
+  color: var(--text3);
+  margin-bottom: 10px;
+  font-weight: 400;
+}
+
+.leg-cities {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.leg-city-block { flex: 1; }
+.leg-city-name { font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+.leg-city-sta { font-size: 11px; color: var(--text3); margin-top: 1px; }
+
+.leg-mid { display: flex; flex-direction: column; align-items: center; gap: 2px; flex-shrink: 0; padding: 0 4px; }
+.leg-line { width: 40px; height: 1px; background: var(--border); }
+.leg-arrow-icon { font-size: 14px; color: var(--text3); }
+
+.leg-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 12px 18px;
+  background: var(--surface2);
+}
+
+.pill {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-radius: 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+}
+.pill-label { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text3); margin-bottom: 2px; }
+.pill-val { font-size: 13px; font-weight: 600; color: var(--text); }
+.pill-val.green { color: var(--green); }
+
+.leg-note-text {
+  padding: 10px 18px;
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.6;
+  border-top: 1px solid var(--border);
+}
+
+/* ─── TASKS PAGE ─── */
+.task-section { margin: 0 16px; }
+
+.task-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: var(--text);
+  border-radius: var(--r) var(--r) 0 0;
+  margin-top: 10px;
+}
+
+.task-section-title { font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 700; color: white; letter-spacing: -0.01em; }
+.task-section-date { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 1px; }
+
+.task-list-card { background: var(--surface); border-radius: 0 0 var(--r) var(--r); box-shadow: var(--shadow); border: 1px solid var(--border); border-top: none; overflow: hidden; margin-bottom: 4px; }
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  -webkit-user-select: none;
+  transition: background 0.1s;
+}
+.task-item:last-child { border-bottom: none; }
+.task-item:active { background: var(--surface2); }
+
+.task-check {
+  width: 24px; height: 24px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.task-item.done .task-check {
+  background: var(--text);
+  border-color: var(--text);
+  transform: scale(1.05);
+}
+
+.task-check svg { opacity: 0; transition: opacity 0.15s; }
+.task-item.done .task-check svg { opacity: 1; }
+
+.task-body { flex: 1; min-width: 0; }
+.task-txt { font-size: 14px; color: var(--text); line-height: 1.4; transition: color 0.2s; }
+.task-item.done .task-txt { color: var(--text3); text-decoration: line-through; text-decoration-color: var(--border); }
+
+.task-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 6px; margin-top: 4px; }
+.tag-u { background: var(--red-bg); color: var(--red); }
+.tag-i { background: #EEF2FF; color: #3730A3; }
+
+.note-zone { padding: 12px 18px 14px; background: var(--surface2); border-top: 1px solid var(--border); }
+.note-zone-label { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+textarea {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  resize: none;
+  outline: none;
+  min-height: 60px;
+  line-height: 1.5;
+  -webkit-appearance: none;
+  transition: border-color 0.15s;
+}
+textarea:focus { border-color: var(--text3); }
+textarea::placeholder { color: var(--text3); }
+
+/* ─── BUDGET PAGE ─── */
+.budget-summary {
+  margin: 0 16px 20px;
+  background: var(--text);
+  border-radius: var(--r);
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+}
+
+.budget-summary-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
+.budget-total-amount { font-family: 'Outfit', sans-serif; font-size: 40px; font-weight: 800; letter-spacing: -0.04em; color: white; line-height: 1; margin-bottom: 4px; }
+.budget-total-sub { font-size: 12px; color: rgba(255,255,255,0.35); }
+
+.budget-card { background: var(--surface); border-radius: var(--r); box-shadow: var(--shadow); border: 1px solid var(--border); overflow: hidden; margin: 0 16px 10px; }
+.budget-group-hdr { padding: 10px 18px; background: var(--surface2); border-bottom: 1px solid var(--border); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text3); }
+
+.budget-row { display: flex; align-items: center; justify-content: space-between; padding: 13px 18px; border-bottom: 1px solid var(--border); gap: 10px; }
+.budget-row:last-child { border-bottom: none; }
+.b-col { flex: 1; min-width: 0; }
+.b-name { font-size: 14px; color: var(--text); }
+.b-sub { font-size: 11px; color: var(--text3); margin-top: 1px; }
+.b-right { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+.b-paid { font-size: 12px; font-weight: 600; color: var(--green); }
+.b-est { font-size: 11px; color: var(--text3); }
+.b-input {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  width: 90px;
+  text-align: right;
+  outline: none;
+  -webkit-appearance: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+.b-input:focus { border-color: var(--text3); background: var(--surface); }
+.b-input::placeholder { color: var(--text3); font-weight: 400; }
+
+/* ─── INFO CARD (logement) ─── */
+.info-card { background: var(--surface); border-radius: var(--r); box-shadow: var(--shadow); border: 1px solid var(--border); overflow: hidden; margin: 0 16px; }
+.info-row { display: flex; gap: 12px; padding: 13px 18px; border-bottom: 1px solid var(--border); align-items: flex-start; }
+.info-row:last-child { border-bottom: none; }
+.info-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); width: 72px; flex-shrink: 0; padding-top: 2px; }
+.info-val { font-size: 14px; color: var(--text); line-height: 1.5; flex: 1; }
+.info-val.green { color: var(--green); font-weight: 500; }
+
+/* ─── TAB BAR ─── */
+.tabbar {
+  position: relative;
+  background: rgba(245,244,240,0.85);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-top: 1px solid var(--border);
+  height: var(--tab-h);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  display: flex;
+  align-items: flex-start;
+  padding-top: 8px;
+  z-index: 100;
+  flex-shrink: 0;
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 6px 4px;
+  -webkit-user-select: none;
+  transition: opacity 0.15s;
+}
+.tab:active { opacity: 0.6; }
+
+.tab-icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s, transform 0.2s;
+  font-size: 17px;
+}
+
+.tab.active .tab-icon { background: var(--text); transform: scale(1.05); }
+.tab.active .tab-icon svg path, .tab.active .tab-icon svg rect, .tab.active .tab-icon svg circle { stroke: white !important; }
+
+.tab-icon svg { width: 19px; height: 19px; }
+.tab-icon svg path, .tab-icon svg rect, .tab-icon svg circle { stroke: var(--text3); stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.2s; }
+
+.tab.active svg path, .tab.active svg rect, .tab.active svg circle { stroke: white; }
+
+.tab-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text3);
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+.tab.active .tab-label { color: var(--text); }
+
+/* ─── TOAST ─── */
+.toast {
+  position: fixed;
+  bottom: calc(var(--tab-h) + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: var(--text);
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 18px;
+  border-radius: 99px;
+  opacity: 0;
+  transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  pointer-events: none;
+  z-index: 999;
+  white-space: nowrap;
+  font-family: 'DM Sans', sans-serif;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ─── STAGGER ANIMATION ─── */
+.stagger > * {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.stagger.animated > * { opacity: 1; transform: translateY(0); }
+.stagger.animated > *:nth-child(1) { transition-delay: 0.04s; }
+.stagger.animated > *:nth-child(2) { transition-delay: 0.08s; }
+.stagger.animated > *:nth-child(3) { transition-delay: 0.12s; }
+.stagger.animated > *:nth-child(4) { transition-delay: 0.16s; }
+.stagger.animated > *:nth-child(5) { transition-delay: 0.20s; }
+.stagger.animated > *:nth-child(6) { transition-delay: 0.24s; }
+
+/* ─── URGENCY DOT on tab ─── */
+.tab-dot {
+  position: absolute;
+  top: 10px;
+  right: 50%;
+  transform: translateX(8px);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+  border: 1.5px solid var(--bg);
+}
+
+.padding-top { padding-top: 16px; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="pages">
+
+    <!-- ═══════════════ PAGE ACCUEIL ═══════════════ -->
+    <div class="page active" id="page-home">
+      <div class="page-header">
+        <div class="page-label">Planning voyage</div>
+        <div class="page-title">Juillet 2026</div>
+      </div>
+
+      <!-- Route strip -->
+      <div style="padding:0 16px 4px;">
+        <div style="background:var(--surface);border-radius:var(--r);padding:16px 18px;box-shadow:var(--shadow);border:1px solid var(--border);">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:10px;">Itinéraire</div>
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+            <span style="font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--text)">Bordeaux</span>
+            <span style="color:var(--text3);font-size:12px;">→</span>
+            <span style="font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--text)">Paris</span>
+            <span style="color:var(--text3);font-size:12px;">→</span>
+            <span style="font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--text)">Barcarès</span>
+            <span style="color:var(--text3);font-size:12px;">→</span>
+            <span style="font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--text)">Bayonne</span>
+            <span style="color:var(--text3);font-size:12px;">→</span>
+            <span style="font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--text)">Naples</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prochain à faire -->
+      <div style="padding:12px 16px 4px;">
+        <div style="background:var(--text);border-radius:var(--r);padding:16px 18px;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.4);margin-bottom:6px;">À faire en priorité</div>
+          <div id="priority-title" style="font-family:'Outfit',sans-serif;font-size:15px;font-weight:600;color:white;margin-bottom:2px;transition:opacity 0.2s"></div>
+          <div id="priority-sub" style="font-size:12px;color:rgba(255,255,255,0.45);transition:opacity 0.2s"></div>
+        </div>
+      </div>
+
+      <!-- Progress -->
+      <div style="padding:12px 16px 4px;">
+        <div style="background:var(--surface);border-radius:var(--r);padding:16px 18px;box-shadow:var(--shadow);border:1px solid var(--border);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <span style="font-size:13px;color:var(--text2)" id="hero-progress-txt">—</span>
+            <span style="font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--text)" id="hero-progress-pct">—%</span>
+          </div>
+          <div class="hero-track"><div class="hero-fill" id="hero-fill" style="width:0%"></div></div>
+        </div>
+      </div>
+
+      <div class="s-label">Étapes</div>
+      <div class="trip-cards stagger" id="trip-cards">
+        <div class="trip-card" onclick="goTo('page-tasks')">
+          <div class="trip-icon dark" style="font-size:20px">🎓</div>
+          <div class="trip-body">
+            <div class="trip-title">Fin de stage</div>
+            <div class="trip-meta">10 juillet · Bordeaux</div>
+          </div>
+          <div class="trip-chevron">›</div>
+        </div>
+        <div class="trip-card" onclick="goTo('page-tasks')">
+          <div class="trip-icon dark" style="font-size:20px">🎤</div>
+          <div class="trip-body">
+            <div class="trip-title">The Weeknd</div>
+            <div class="trip-meta">11 juillet · Paris</div>
+          </div>
+          <div class="badge done"><div class="badge-dot"></div>Billets OK</div>
+        </div>
+        <div class="trip-card" onclick="goTo('page-tasks')">
+          <div class="trip-icon amber" style="font-size:20px">🌊</div>
+          <div class="trip-body">
+            <div class="trip-title">Les Déferlantes</div>
+            <div class="trip-meta">12 → 14 juillet · Torreilles</div>
+          </div>
+          <div class="badge done"><div class="badge-dot"></div>Airbnb OK</div>
+        </div>
+        <div class="trip-card" onclick="goTo('page-tasks')">
+          <div class="trip-icon amber" style="font-size:20px">🥁</div>
+          <div class="trip-body">
+            <div class="trip-title">Fêtes de Bayonne</div>
+            <div class="trip-meta">~15 juillet · Bayonne</div>
+          </div>
+          <div class="badge done"><div class="badge-dot"></div>Logement OK</div>
+        </div>
+        <div class="trip-card" onclick="goTo('page-tasks')">
+          <div class="trip-icon green" style="font-size:20px">🇮🇹</div>
+          <div class="trip-body">
+            <div class="trip-title">Italie — Naples</div>
+            <div class="trip-meta">22 → 29 juillet</div>
+          </div>
+          <div class="badge urgent"><div class="badge-dot"></div>Vol à réserver</div>
+        </div>
+      </div>
+      <div style="height:8px"></div>
+    </div>
+
+    <!-- ═══════════════ PAGE TRAJETS ═══════════════ -->
+    <div class="page" id="page-transit">
+      <div class="page-header">
+        <div class="page-label">Logistique</div>
+        <div class="page-title">Trajets</div>
+      </div>
+
+      <div class="leg-list stagger">
+
+        <div class="leg">
+          <div class="leg-top">
+            <div class="leg-date-line">11 juillet — matin</div>
+            <div class="leg-cities">
+              <div class="leg-city-block"><div class="leg-city-name">Bordeaux</div><div class="leg-city-sta">Gare Saint-Jean</div></div>
+              <div class="leg-mid"><div class="leg-line"></div><div class="leg-arrow-icon">→</div><div class="leg-line"></div></div>
+              <div class="leg-city-block" style="text-align:right"><div class="leg-city-name">Paris</div><div class="leg-city-sta">Gare Montparnasse</div></div>
+            </div>
+          </div>
+          <div class="leg-pills">
+            <div class="pill"><div class="pill-label">Durée</div><div class="pill-val">2h10 direct</div></div>
+            <div class="pill"><div class="pill-label">Prix</div><div class="pill-val green">19 – 60 €</div></div>
+            <div class="pill"><div class="pill-label">Compagnie</div><div class="pill-val">OUIGO / TGV</div></div>
+          </div>
+        </div>
+
+        <div class="leg">
+          <div class="leg-top">
+            <div class="leg-date-line">12 juillet — matin</div>
+            <div class="leg-cities">
+              <div class="leg-city-block"><div class="leg-city-name">Paris</div><div class="leg-city-sta">Gare de Lyon</div></div>
+              <div class="leg-mid"><div class="leg-line"></div><div class="leg-arrow-icon">→</div><div class="leg-line"></div></div>
+              <div class="leg-city-block" style="text-align:right"><div class="leg-city-name">Perpignan</div><div class="leg-city-sta">Gare de Perpignan</div></div>
+            </div>
+          </div>
+          <div class="leg-pills">
+            <div class="pill"><div class="pill-label">Durée</div><div class="pill-val">5h direct</div></div>
+            <div class="pill"><div class="pill-label">Prix</div><div class="pill-val green">19 – 70 €</div></div>
+            <div class="pill"><div class="pill-label">Compagnie</div><div class="pill-val">OUIGO / TGV</div></div>
+          </div>
+          <div class="leg-note-text">Départ Gare de Lyon (pas Montparnasse). Métro ligne 14, ~15 min entre les deux.</div>
+        </div>
+
+        <div class="leg">
+          <div class="leg-top">
+            <div class="leg-date-line">12 juillet — à l'arrivée</div>
+            <div class="leg-cities">
+              <div class="leg-city-block"><div class="leg-city-name">Perpignan</div><div class="leg-city-sta">Gare TGV</div></div>
+              <div class="leg-mid"><div class="leg-line"></div><div class="leg-arrow-icon">→</div><div class="leg-line"></div></div>
+              <div class="leg-city-block" style="text-align:right"><div class="leg-city-name">Torreilles</div><div class="leg-city-sta">Arrêt Sankéo</div></div>
+            </div>
+          </div>
+          <div class="leg-pills">
+            <div class="pill"><div class="pill-label">Durée</div><div class="pill-val">~35 min</div></div>
+            <div class="pill"><div class="pill-label">Prix</div><div class="pill-val green">~2 €</div></div>
+            <div class="pill"><div class="pill-label">Ligne</div><div class="pill-val">Navette Sankéo</div></div>
+          </div>
+          <div class="leg-note-text">Descends à Torreilles-Plage, l'Airbnb est à 2 pas. Départs toutes les 30 min de 15h à 18h. Retour nuit à 1h et 3h. Pas d'Uber dans le coin.</div>
+        </div>
+
+        <div class="leg">
+          <div class="leg-top">
+            <div class="leg-date-line">12 → 14 juillet — quotidien</div>
+            <div class="leg-cities">
+              <div class="leg-city-block"><div class="leg-city-name">Torreilles</div><div class="leg-city-sta">Airbnb</div></div>
+              <div class="leg-mid"><div class="leg-line"></div><div class="leg-arrow-icon">⇄</div><div class="leg-line"></div></div>
+              <div class="leg-city-block" style="text-align:right"><div class="leg-city-name">Le Barcarès</div><div class="leg-city-sta">Jardins du Lydia</div></div>
+            </div>
+          </div>
+          <div class="leg-pills">
+            <div class="pill"><div class="pill-label">À pied</div><div class="pill-val">20 – 25 min</div></div>
+            <div class="pill"><div class="pill-label">En vélo</div><div class="pill-val">~8 min</div></div>
+            <div class="pill"><div class="pill-label">Piste</div><div class="pill-val green">Le long de la mer</div></div>
+          </div>
+          <div class="leg-note-text">Trajet plat et agréable. Retour la nuit : navette Sankéo (1h ou 3h) plutôt qu'à pied.</div>
+        </div>
+
+        <div class="leg">
+          <div class="leg-top">
+            <div class="leg-date-line">Vers le 14 – 15 juillet</div>
+            <div class="leg-cities">
+              <div class="leg-city-block"><div class="leg-city-name">Perpignan</div><div class="leg-city-sta">Gare de Perpignan</div></div>
+              <div class="leg-mid"><div class="leg-line"></div><div class="leg-arrow-icon">→</div><div class="leg-line"></div></div>
+              <div class="leg-city-block" style="text-align:right"><div class="leg-city-name">Bayonne</div><div class="leg-city-sta">Gare de Bayonne</div></div>
+            </div>
+          </div>
+          <div class="leg-pills">
+            <div class="pill"><div class="pill-label">Durée</div><div class="pill-val">~6h corresp.</div></div>
+            <div class="pill"><div class="pill-label">Prix</div><div class="pill-val green">46 – 80 €</div></div>
+            <div class="pill"><div class="pill-label">Compagnie</div><div class="pill-val">TER / Intercités</div></div>
+          </div>
+          <div class="leg-note-text">Pas de direct. FlixBus aussi à ~22 €.</div>
+        </div>
+
+        <div class="leg">
+          <div class="leg-top">
+            <div class="leg-date-line">22 juillet aller · 29 juillet retour</div>
+            <div class="leg-cities">
+              <div class="leg-city-block"><div class="leg-city-name">Bordeaux</div><div class="leg-city-sta">Mérignac (BOD)</div></div>
+              <div class="leg-mid"><div class="leg-line"></div><div class="leg-arrow-icon">⇄</div><div class="leg-line"></div></div>
+              <div class="leg-city-block" style="text-align:right"><div class="leg-city-name">Naples</div><div class="leg-city-sta">Capodichino (NAP)</div></div>
+            </div>
+          </div>
+          <div class="leg-pills">
+            <div class="pill"><div class="pill-label">Durée</div><div class="pill-val">2h20 direct</div></div>
+            <div class="pill"><div class="pill-label">A/R / pers.</div><div class="pill-val green">100 – 250 €</div></div>
+            <div class="pill"><div class="pill-label">Compagnie</div><div class="pill-val">Volotea</div></div>
+          </div>
+          <div class="leg-note-text">Seule compagnie en direct. Réserver sur Volotea.com ou Kayak.</div>
+        </div>
+
+        <div class="s-label" style="padding:0;margin-top:8px">Logement · Déferlantes</div>
+        <div class="info-card" style="margin:0">
+          <div class="info-row"><div class="info-lbl">Airbnb</div><div class="info-val">Bungalow · Torreilles-Plage — <strong>236 €</strong></div></div>
+          <div class="info-row"><div class="info-lbl">Dates</div><div class="info-val">12 → 14 juillet · 2 nuits</div></div>
+          <div class="info-row"><div class="info-lbl">Accès mer</div><div class="info-val green">20-25 min à pied le long de la plage jusqu'au Lydia</div></div>
+          <div class="info-row"><div class="info-lbl">Retour nuit</div><div class="info-val">Navette Sankéo à 1h ou 3h du matin</div></div>
+          <div class="info-row"><div class="info-lbl">Vélo</div><div class="info-val">Locations sur place, piste cyclable le long de la mer</div></div>
+        </div>
+
+      </div>
+      <div style="height:8px"></div>
+    </div>
+
+    <!-- ═══════════════ PAGE TÂCHES ═══════════════ -->
+    <div class="page" id="page-tasks">
+      <div class="page-header">
+        <div class="page-label">À faire</div>
+        <div class="page-title">Tâches</div>
+      </div>
+
+      <!-- 10 juillet -->
+      <div class="task-section">
+        <div class="task-section-header">
+          <div><div class="task-section-title">Fin de stage</div><div class="task-section-date">10 juillet · Bordeaux</div></div>
+          <div class="badge done"><div class="badge-dot"></div>OK</div>
+        </div>
+        <div class="task-list-card">
+          <div class="task-item" id="t-s3" onclick="toggle('t-s3')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Réserver train Bordeaux Saint-Jean → Montparnasse</div><span class="task-tag tag-u">Urgent</span></div></div>
+          <div class="task-item" id="t-s2" onclick="toggle('t-s2')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Préparer le sac pour Paris (une nuit)</div></div></div>
+          <div class="task-item" id="t-s1" onclick="toggle('t-s1')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Rendre le badge et le matériel</div></div></div>
+        </div>
+      </div>
+
+      <!-- 11 juillet -->
+      <div class="task-section">
+        <div class="task-section-header">
+          <div><div class="task-section-title">The Weeknd</div><div class="task-section-date">11 juillet · Paris</div></div>
+          <div class="badge done"><div class="badge-dot"></div>Billets OK</div>
+        </div>
+        <div class="task-list-card">
+          <div class="task-item" id="t-p4" onclick="toggle('t-p4')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Réserver train Paris Gare de Lyon → Perpignan</div><span class="task-tag tag-u">Urgent</span></div></div>
+          <div class="task-item" id="t-p5" onclick="toggle('t-p5')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Télécharger le billet sur le téléphone</div></div></div>
+          <div class="task-item" id="t-p3" onclick="toggle('t-p3')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Vérifier transport hôtel → salle de concert</div></div></div>
+          <div class="task-item done" id="t-p1" onclick="toggle('t-p1')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Billet concert réservé</div></div></div>
+          <div class="task-item done" id="t-p2" onclick="toggle('t-p2')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Hôtel Montparnasse réservé</div></div></div>
+        </div>
+        <div class="note-zone"><div class="note-zone-label">Notes</div><textarea id="n-paris" placeholder="Adresse hôtel, heure du concert…" rows="2" oninput="saveNote('n-paris')"></textarea></div>
+      </div>
+
+      <!-- Déferlantes -->
+      <div class="task-section">
+        <div class="task-section-header">
+          <div><div class="task-section-title">Les Déferlantes</div><div class="task-section-date">12 → 14 juillet · Torreilles-Plage</div></div>
+          <div class="badge done"><div class="badge-dot"></div>Airbnb 236 €</div>
+        </div>
+        <div class="task-list-card">
+          <div class="task-item" id="t-d2" onclick="toggle('t-d2')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Vérifier les billets festival</div><span class="task-tag tag-u">Urgent</span></div></div>
+          <div class="task-item" id="t-d3" onclick="toggle('t-d3')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Vérifier horaires Sankéo sur sankeo.com</div><span class="task-tag tag-i">Retours 1h et 3h</span></div></div>
+          <div class="task-item" id="t-d4" onclick="toggle('t-d4')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Regarder la programmation</div></div></div>
+          <div class="task-item" id="t-d5" onclick="toggle('t-d5')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Préparer sac festival (crème solaire, batterie externe…)</div></div></div>
+          <div class="task-item done" id="t-d1" onclick="toggle('t-d1')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Airbnb Torreilles-Plage réservé — 236 €</div></div></div>
+        </div>
+        <div class="note-zone"><div class="note-zone-label">Notes</div><textarea id="n-def" placeholder="Code Airbnb, programme, navette…" rows="2" oninput="saveNote('n-def')"></textarea></div>
+      </div>
+
+      <!-- Bayonne -->
+      <div class="task-section">
+        <div class="task-section-header">
+          <div><div class="task-section-title">Fêtes de Bayonne</div><div class="task-section-date">~15 juillet · chez les grands-parents</div></div>
+          <div class="badge done"><div class="badge-dot"></div>Logement OK</div>
+        </div>
+        <div class="task-list-card">
+          <div class="task-item" id="t-b1" onclick="toggle('t-b1')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Réserver train Perpignan → Bayonne</div><span class="task-tag tag-u">Urgent</span></div></div>
+          <div class="task-item" id="t-b3" onclick="toggle('t-b3')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Confirmer la date d'arrivée aux grands-parents</div></div></div>
+          <div class="task-item" id="t-b2" onclick="toggle('t-b2')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Prévoir tenue blanche et rouge</div></div></div>
+        </div>
+        <div class="note-zone"><div class="note-zone-label">Notes</div><textarea id="n-bay" placeholder="Horaires train, date d'arrivée…" rows="2" oninput="saveNote('n-bay')"></textarea></div>
+      </div>
+
+      <!-- Italie -->
+      <div class="task-section">
+        <div class="task-section-header">
+          <div><div class="task-section-title">Voyage en Italie</div><div class="task-section-date">22 → 29 juillet · Naples</div></div>
+          <div class="badge urgent"><div class="badge-dot"></div>Vol à réserver</div>
+        </div>
+        <div class="task-list-card">
+          <div class="task-item" id="t-it1" onclick="toggle('t-it1')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Réserver le vol A/R Bordeaux → Naples (Volotea)</div><span class="task-tag tag-u">Urgent</span></div></div>
+          <div class="task-item" id="t-it3" onclick="toggle('t-it3')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Vérifier carte d'identité valide</div></div></div>
+          <div class="task-item" id="t-it5" onclick="toggle('t-it5')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Prévenir la banque pour l'étranger</div></div></div>
+          <div class="task-item" id="t-it4" onclick="toggle('t-it4')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Prévoir transport aéroport → Naples centre (~20 €)</div></div></div>
+          <div class="task-item" id="t-it6" onclick="toggle('t-it6')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Réserver Pompéi / excursions si prévu</div></div></div>
+          <div class="task-item done" id="t-it2" onclick="toggle('t-it2')"><div class="task-check"><svg viewBox="0 0 10 8"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="task-body"><div class="task-txt">Airbnb réservé — 350 € / pers.</div></div></div>
+        </div>
+        <div class="note-zone"><div class="note-zone-label">Notes</div><textarea id="n-italie" placeholder="Confirmation vol, adresse Airbnb, visites…" rows="3" oninput="saveNote('n-italie')"></textarea></div>
+      </div>
+      <div style="height:8px"></div>
+    </div>
+
+    <!-- ═══════════════ PAGE BUDGET ═══════════════ -->
+    <div class="page" id="page-budget">
+      <div class="page-header">
+        <div class="page-label">Finances</div>
+        <div class="page-title">Budget</div>
+      </div>
+
+      <div class="budget-summary">
+        <div class="budget-summary-label">Total saisi (hors déjà payé)</div>
+        <div class="budget-total-amount" id="budget-display">— €</div>
+        <div class="budget-total-sub">Remplis les montants au fur et à mesure</div>
+      </div>
+
+      <div class="budget-card">
+        <div class="budget-group-hdr">Déjà réglé</div>
+        <div class="budget-row"><div class="b-col"><div class="b-name">Billet The Weeknd</div></div><div class="b-right"><div class="b-paid">Payé ✓</div></div></div>
+        <div class="budget-row"><div class="b-col"><div class="b-name">Hôtel Montparnasse</div><div class="b-sub">Nuit du 11 juillet</div></div><div class="b-right"><div class="b-paid">Payé ✓</div></div></div>
+        <div class="budget-row"><div class="b-col"><div class="b-name">Airbnb Torreilles-Plage</div><div class="b-sub">12 → 14 juillet</div></div><div class="b-right"><div class="b-paid">236 € ✓</div></div></div>
+        <div class="budget-row"><div class="b-col"><div class="b-name">Airbnb Naples</div><div class="b-sub">350 € / pers. · 7 nuits</div></div><div class="b-right"><div class="b-paid">Payé ✓</div></div></div>
+      </div>
+
+      <div class="budget-card">
+        <div class="budget-group-hdr">Trains France</div>
+        <div class="budget-row"><div class="b-col"><div class="b-name">Bordeaux → Paris</div><div class="b-sub">Saint-Jean → Montparnasse · 2h10</div></div><div class="b-right"><div class="b-est">19 – 60 €</div><input class="b-input" id="b-1" type="number" inputmode="numeric" placeholder="€" oninput="calcBudget()"></div></div>
+        <div class="budget-row"><div class="b-col"><div class="b-name">Paris → Perpignan</div><div class="b-sub">Gare de Lyon · 5h direct</div></div><div class="b-right"><div class="b-est">19 – 70 €</div><input class="b-input" id="b-2" type="number" inputmode="numeric" placeholder="€" oninput="calcBudget()"></div></div>
+        <div class="budget-row"><div class="b-col"><div class="b-name">Navette Sankéo</div><div class="b-sub">Perpignan → Torreilles</div></div><div class="b-right"><div class="b-est">~2 €</div><input class="b-input" id="b-3" type="number" inputmode="numeric" placeholder="€" oninput="calcBudget()"></div></div>
+        <div class="budget-row"><div class="b-col"><div class="b-name">Billets Déferlantes</div></div><div class="b-right"><div class="b-est">à vérifier</div><input class="b-input" id="b-4" type="number" inputmode="numeric" placeholder="€" oninput="calcBudget()"></div></div>
+        <div class="budget-row"><div class="b-col"><div class="b-name">Perpignan → Bayonne</div><div class="b-sub">~6h avec correspondance</div></div><div class="b-right"><div class="b-est">46 – 80 €</div><input class="b-input" id="b-5" type="number" inputmode="numeric" placeholder="€" oninput="calcBudget()"></div></div>
+      </div>
+
+      <div class="budget-card">
+        <div class="budget-group-hdr">Italie</div>
+        <div class="budget-row"><div class="b-col"><div class="b-name">Vol A/R Bordeaux → Naples</div><div class="b-sub">Volotea direct · par personne</div></div><div class="b-right"><div class="b-est">100 – 250 €</div><input class="b-input" id="b-6" type="number" inputmode="numeric" placeholder="€" oninput="calcBudget()"></div></div>
+        <div class="budget-row"><div class="b-col"><div class="b-name">Transport aéroport Naples</div><div class="b-sub">Navette ou taxi A/R</div></div><div class="b-right"><div class="b-est">~40 €</div><input class="b-input" id="b-7" type="number" inputmode="numeric" placeholder="€" oninput="calcBudget()"></div></div>
+      </div>
+      <div style="height:8px"></div>
+    </div>
+
+  </div><!-- /pages -->
+
+  <!-- ═══════════════ TAB BAR ═══════════════ -->
+  <nav class="tabbar">
+    <div class="tab active" id="tab-home" onclick="switchTab('home')">
+      <div class="tab-icon">
+        <svg viewBox="0 0 20 20"><path d="M3 9.5L10 3l7 6.5V17a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M7 18v-6h6v6"/></svg>
+      </div>
+      <div class="tab-label">Accueil</div>
+    </div>
+    <div class="tab" id="tab-transit" onclick="switchTab('transit')">
+      <div class="tab-icon">
+        <svg viewBox="0 0 20 20"><path d="M3 10h14M13 6l4 4-4 4"/></svg>
+      </div>
+      <div class="tab-label">Trajets</div>
+    </div>
+    <div class="tab" id="tab-tasks" onclick="switchTab('tasks')" style="position:relative">
+      <div class="tab-dot" id="urgent-dot" style="display:none"></div>
+      <div class="tab-icon">
+        <svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M7 10l2 2 4-4"/></svg>
+      </div>
+      <div class="tab-label">Tâches</div>
+    </div>
+    <div class="tab" id="tab-budget" onclick="switchTab('budget')">
+      <div class="tab-icon">
+        <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M10 6v1m0 6v1m-2.5-5.5h4a1.5 1.5 0 010 3h-3a1.5 1.5 0 000 3h4"/></svg>
+      </div>
+      <div class="tab-label">Budget</div>
+    </div>
+  </nav>
+</div>
+
+<div class="toast" id="toast">Sauvegardé</div>
+
+<script>
+// ─── STORAGE ───
+const TASKS_KEY  = 'ete26_tasks';
+const NOTES_KEY  = 'ete26_notes';
+const BUDGET_KEY = 'ete26_budget';
+const taskState  = JSON.parse(localStorage.getItem(TASKS_KEY)  || '{}');
+const notesState = JSON.parse(localStorage.getItem(NOTES_KEY)  || '{}');
+const budgetState= JSON.parse(localStorage.getItem(BUDGET_KEY) || '{}');
+const budgetIds  = ['b-1','b-2','b-3','b-4','b-5','b-6','b-7'];
+
+// ─── TABS ───
+let currentTab = 'home';
+function switchTab(name) {
+  if (name === currentTab) return;
+  const oldPage = document.getElementById('page-' + currentTab);
+  const newPage = document.getElementById('page-' + name);
+  oldPage.classList.add('exit');
+  oldPage.classList.remove('active');
+  setTimeout(() => oldPage.classList.remove('exit'), 300);
+  newPage.classList.add('active');
+  newPage.scrollTop = 0;
+  document.getElementById('tab-' + currentTab).classList.remove('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  currentTab = name;
+  animateStagger(newPage);
+}
+
+function goTo(pageId) {
+  const name = pageId.replace('page-', '');
+  switchTab(name);
+}
+
+function animateStagger(page) {
+  page.querySelectorAll('.stagger').forEach(el => {
+    el.classList.remove('animated');
+    requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('animated')));
+  });
+}
+
+// ─── TASKS ───
+const PRIORITY_LIST = [
+  { id: 't-it1', title: 'Réserver le vol A/R Bordeaux → Naples',     sub: 'Volotea.com · 100 – 250 € / pers.' },
+  { id: 't-s3',  title: 'Réserver train Bordeaux → Paris',            sub: 'Saint-Jean → Montparnasse · OUIGO ou TGV' },
+  { id: 't-p4',  title: 'Réserver train Paris → Perpignan',           sub: 'Gare de Lyon · 5h direct' },
+  { id: 't-d2',  title: 'Vérifier les billets festival',               sub: 'Les Déferlantes · pass 3j ou jour par jour ?' },
+  { id: 't-b1',  title: 'Réserver train Perpignan → Bayonne',         sub: '~6h avec correspondance · 46 – 80 €' },
+  { id: 't-p5',  title: 'Télécharger le billet The Weeknd',           sub: 'Sur le téléphone avant le concert' },
+  { id: 't-it3', title: 'Vérifier la carte d\'identité',              sub: 'Doit être valide pour le vol Naples' },
+  { id: 't-it5', title: 'Prévenir la banque pour l\'étranger',        sub: 'Avant le départ pour l\'Italie' },
+  { id: 't-p3',  title: 'Vérifier transport hôtel → salle de concert',sub: 'Métro / RER depuis Montparnasse' },
+  { id: 't-b3',  title: 'Confirmer la date d\'arrivée à Bayonne',     sub: 'Prévenir les grands-parents' },
+  { id: 't-d3',  title: 'Vérifier horaires navette Sankéo',           sub: 'sankeo.com · retours 1h et 3h du matin' },
+  { id: 't-it4', title: 'Prévoir transport aéroport → Naples',        sub: 'Navette ou taxi · ~20 €' },
+  { id: 't-d4',  title: 'Regarder la programmation des Déferlantes',  sub: 'Choisir les artistes à voir' },
+  { id: 't-s2',  title: 'Préparer le sac pour Paris',                 sub: 'Une nuit · concert le soir' },
+  { id: 't-b2',  title: 'Prévoir tenue blanche et rouge',             sub: 'Tradition des Fêtes de Bayonne' },
+  { id: 't-d5',  title: 'Préparer le sac festival',                   sub: 'Crème solaire, batterie externe, tenue' },
+  { id: 't-it6', title: 'Réserver Pompéi / excursions',               sub: 'À faire à l\'avance en été' },
+  { id: 't-s1',  title: 'Rendre le badge et le matériel',             sub: 'Dernier jour de stage · 10 juillet' },
+];
+
+function updatePriority() {
+  const titleEl = document.getElementById('priority-title');
+  const subEl   = document.getElementById('priority-sub');
+  const next = PRIORITY_LIST.find(t => !document.getElementById(t.id)?.classList.contains('done'));
+  titleEl.style.opacity = '0';
+  subEl.style.opacity   = '0';
+  setTimeout(() => {
+    if (next) {
+      titleEl.textContent = next.title;
+      subEl.textContent   = next.sub;
+    } else {
+      titleEl.textContent = 'Tout est fait — bon voyage ! ';
+      subEl.textContent   = 'Juillet 2026';
+    }
+    titleEl.style.opacity = '1';
+    subEl.style.opacity   = '1';
+  }, 180);
+}
+
+function toggle(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('done');
+  taskState[id] = el.classList.contains('done');
+  localStorage.setItem(TASKS_KEY, JSON.stringify(taskState));
+  updateProgress();
+  updatePriority();
+  showToast('Sauvegardé');
+}
+
+function updateProgress() {
+  const all  = document.querySelectorAll('.task-item').length;
+  const done = document.querySelectorAll('.task-item.done').length;
+  const pct  = all ? Math.round(done / all * 100) : 0;
+  document.getElementById('hero-fill').style.width = pct + '%';
+  document.getElementById('hero-progress-txt').textContent = done + ' / ' + all + ' tâches';
+  document.getElementById('hero-progress-pct').textContent = pct + '%';
+  // Show urgent dot if any non-done urgent tasks
+  const urgentPending = document.querySelectorAll('.task-item:not(.done) .tag-u').length;
+  document.getElementById('urgent-dot').style.display = urgentPending > 0 ? 'block' : 'none';
+}
+
+// ─── NOTES ───
+function saveNote(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  notesState[id] = el.value;
+  localStorage.setItem(NOTES_KEY, JSON.stringify(notesState));
+  showToast('Note sauvegardée');
+}
+
+// ─── BUDGET ───
+function calcBudget() {
+  let total = 0;
+  budgetIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    budgetState[id] = el.value;
+    const n = parseFloat(el.value);
+    if (!isNaN(n)) total += n;
+  });
+  localStorage.setItem(BUDGET_KEY, JSON.stringify(budgetState));
+  document.getElementById('budget-display').textContent = total > 0 ? total + ' €' : '— €';
+  showToast('Budget mis à jour');
+}
+
+// ─── INIT ───
+let toastTimer;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg || 'Sauvegardé';
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 1600);
+}
+
+// ─── INIT ───
+document.querySelectorAll('.task-item').forEach(el => { if (taskState[el.id]) el.classList.add('done'); });
+Object.keys(notesState).forEach(id => { const el = document.getElementById(id); if (el) el.value = notesState[id]; });
+budgetIds.forEach(id => { const el = document.getElementById(id); if (el && budgetState[id]) el.value = budgetState[id]; });
+calcBudget();
+updateProgress();
+updatePriority();
+
+// Animate home on load
+setTimeout(() => animateStagger(document.getElementById('page-home')), 80);
+</script>
+</body>
+</html>
